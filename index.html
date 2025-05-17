@@ -78,29 +78,40 @@
         <button onclick="toggleSound()">Toggle Sound</button>
     </div>
 
-    <a-scene embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceWidth:1920; sourceHeight:1080; displayWidth: 1920; displayHeight: 1080; cameraParametersUrl: data/camera_para.dat; maxDetectionRate: 60; canvasWidth: 1920; canvasHeight: 1080; facingMode: environment;"
-        renderer="logarithmicDepthBuffer: true; precision: medium;" vr-mode-ui="enabled: false">
-
+    <a-scene embedded arjs="sourceType: webcam; 
+          debugUIEnabled: true; 
+          detectionMode: mono_and_matrix; 
+          matrixCodeType: 3x3;
+          patternRatio: 0.75;
+          sourceWidth: 1920; 
+          sourceHeight: 1080;
+          displayWidth: 1920; 
+          displayHeight: 1080;
+          maxDetectionRate: 30;
+          facingMode: environment;" renderer="logarithmicDepthBuffer: true; precision: medium;"
+        vr-mode-ui="enabled: false">
         <!-- Assets management system -->
         <a-assets>
             <!-- 3D Models -->
+            <a-asset-item id="beach-ball" src="assets/models/beachball/13517_Beach_Ball_v2_L3.obj"></a-asset-item>
+            <a-asset-item id="beach-ball-mtl" src="assets/models/beachball/13517_Beach_Ball_v2_L3.mtl"></a-asset-item>
+
             <a-asset-item id="palm-tree" src="assets/models/palmtree/Palm_01.obj"></a-asset-item>
             <a-asset-item id="palm-tree-mtl" src="assets/models/palmtree/Palm_01.mtl"></a-asset-item>
-
-            <a-asset-item id="beach-umbrella"
-                src="assets/models/umbrella//12984_beach_umbrella_v1_L2.obj"></a-asset-item>
-            <a-asset-item id="beach-umbrella-mtl"
-                src="assets/models/umbrella//12984_beach_umbrella_v1_L2.mtl"></a-asset-item>
-
-            <a-asset-item id="surfboard" src="assets/models/surfboard//10537_Surfboard_v1_L3.obj"></a-asset-item>
-            <a-asset-item id="surfboard-mtl" src="assets/models/surfboard//10537_Surfboard_v1_L3.mtl"></a-asset-item>
 
             <a-asset-item id="sandcastle" src="assets/models/castel/towers .obj"></a-asset-item>
             <a-asset-item id="sandcastle-mtl" src="assets/models/castel/towers .stl"></a-asset-item>
 
-            <a-asset-item id="beach-ball" src="assets/models/beachball//13517_Beach_Ball_v2_L3.obj"></a-asset-item>
-            <a-asset-item id="beach-ball-mtl" src="assets/models/beachball/13517_Beach_Ball_v2_L3.mtl"></a-asset-item>
+            <a-asset-item id="surfboard" src="assets/models/surfboard/10537_Surfboard_v1_L3.obj"></a-asset-item>
+            <a-asset-item id="surfboard-mtl" src="assets/models/surfboard/10537_Surfboard_v1_L3.mtl"></a-asset-item>
+
+            <a-asset-item id="beach-umbrella"
+                src="assets/models/umbrella/12984_beach_umbrella_v1_L2.obj"></a-asset-item>
+            <a-asset-item id="beach-umbrella-mtl"
+                src="assets/models/umbrella/12984_beach_umbrella_v1_L2.mtl"></a-asset-item>
+
+
+
 
             <!-- Sounds -->
             <audio id="waves-sound" src="assets/sounds/waves.wav" preload="auto"></audio>
@@ -113,7 +124,7 @@
         </a-entity>
 
         <!-- Palm Tree Marker -->
-        <a-marker type="pattern" url="assets/markers/palmTree.png">
+        <a-marker type="pattern" url="assets/markers/palmTree.patt">
             <a-entity position="0 0 0" rotation="-90 0 0" scale="0.5 0.5 0.5"
                 obj-model="obj: #palm-tree; mtl: #palm-tree-mtl"
                 animation="property: rotation; to: -90 360 0; loop: true; dur: 10000; easing: linear">
@@ -124,12 +135,14 @@
         <!-- Beach Umbrella Marker -->
         <a-marker type="pattern" url="assets/markers/umbrella.patt">
             <a-entity position="0 0 0" rotation="-90 0 0" scale="0.5 0.5 0.5" gltf-model="#beach-umbrella">
+
             </a-entity>
         </a-marker>
 
         <!-- Surfboard Marker -->
         <a-marker type="pattern" url="assets/markers/surfboard.patt">
             <a-entity position="0 0 0" rotation="-90 0 0" scale="0.5 0.5 0.5" gltf-model="#surfboard"
+                obj-model="obj: assets/models/surfboard/10537_Surfboard_v1_L3.obj; mtl: assets/models/surfboard/10537_Surfboard_v1_L3.mtl"
                 animation="property: position; to: 0 0.2 0; dir: alternate; dur: 2000; loop: true; easing: easeInOutQuad">
             </a-entity>
             <a-sound src="#waves-sound" autoplay="true" loop="true" position="0 2 0"></a-sound>
@@ -137,7 +150,8 @@
 
         <!-- Sandcastle Marker -->
         <a-marker type="pattern" url="assets/markers/sandcastle.patt">
-            <a-entity position="0 0 0" rotation="-90 0 0" scale="0.5 0.5 0.5" gltf-model="#sandcastle">
+            <a-entity position="0 0 0" rotation="-90 0 0" scale="0.05 0.05 0.05"
+                obj-model="obj: assets/models/castel/towers .obj; mtl: assets/models/castel/towers .stl">
             </a-entity>
             <!-- Particle effect for sand -->
             <a-entity position="0 0.5 0"
@@ -146,9 +160,15 @@
 
         <!-- Beach Ball Marker -->
         <a-marker type="pattern" url="assets/markers/beachball.patt">
-            <a-entity position="0 0 0" rotation="-90 0 0" scale="0.5 0.5 0.5" gltf-model="#beach-ball"
+            <!-- 3D model -->
+            <a-entity position="0 0.5 0" rotation="-90 0 0" scale="0.1 0.1 0.1"
+                obj-model="obj: assets/models/beachball/13517_Beach_Ball_v2_L3.obj; mtl: assets/models/beachball/13517_Beach_Ball_v2_L3.mtl"
                 animation="property: rotation; to: -90 360 360; loop: true; dur: 5000; easing: linear">
             </a-entity>
+
+            <!-- Simple test box to verify marker detection -->
+            <a-box position="0 1 0" color="red" scale="0.2 0.2 0.2"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 2000"></a-box>
         </a-marker>
 
         <a-entity camera></a-entity>
